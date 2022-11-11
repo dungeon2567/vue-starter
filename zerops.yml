@@ -1,14 +1,14 @@
 # hostname of your service
 # (supports monorepositories! just add
 # one service section after the other)
-ubuntu0:
+nodejs0:
   # ==== how to build your application ====
   build:
     # select what technology should the
     # build container be based on, can
     # be different from service technology
     # see docs for full list
-    base: [ ubuntu@22.04 ]
+    base: [ nodejs@16 ]
 
     # *optional* add additional dependencies
     # on top of base technology (combination
@@ -19,17 +19,16 @@ ubuntu0:
 
     # build your application
     build:
-      - curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-      - sudo apt-get install -y nodejs
-      - npm install
+      - npm i
       - npm run build
+
     # select which files / folders to deploy
     # after the build succesfully finished
-    deploy: [ . ]
+    deploy: [ dist, package.json ]
 
     # *optional*: which files / folders
     # to cache for the next use
-    # cache: [ node_modules ]
+    cache: [ node_modules ]
 
   # ==== how to run your application ====
   run:
@@ -45,4 +44,4 @@ ubuntu0:
     #  - rm -rf ./cache
 
     # how to start your application
-    start: npm run dev
+    start: npm start
